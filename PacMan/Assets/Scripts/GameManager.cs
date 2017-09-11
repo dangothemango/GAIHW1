@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager INSTANCE;
+    public GameObject[] ghosts = { };
 
 	// Use this for initialization
 	void Start () {
@@ -19,4 +20,15 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void StopGhosts() {
+        foreach (GameObject g in ghosts) {
+            g.GetComponent<Ghost>().Stop();
+        }
+    }
+
+    public void ProcessGameOver() {
+
+    }
+
 }
