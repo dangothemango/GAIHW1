@@ -11,13 +11,13 @@ public class GameManager : MonoBehaviour {
     public Image[] LivesUI;
     public Text scoreText;
     public Text highScoreText;
+    public GameObject startButton;
     int livesRemaining;
-    int score = 0;
+    int score;
 
 
 	// Use this for initialization
 	void Start () {
-        livesRemaining = LivesUI.Length;
         if (PlayerPrefs.HasKey("High_Score")) {
             highScoreText.text = string.Format("{0}", PlayerPrefs.GetInt("High_Score").ToString().PadLeft(5,'0'));
         }
@@ -27,11 +27,28 @@ public class GameManager : MonoBehaviour {
         }
         INSTANCE = this;
 	}
+
+    public void StartGame() {
+        score = 0;
+        livesRemaining = LivesUI.Length;
+        ResetAgents();
+        foreach (Image i in LivesUI) {
+            i.gameObject.SetActive(true);
+        }
+        startButton.SetActive(false);
+        ResetPellets();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    void ResetAgents() {
+        foreach (Agent a in agents) {
+            a.Restart();
+        }
+    }
 
     public void StopAgents() {
         foreach (Agent a in agents) {
@@ -44,9 +61,7 @@ public class GameManager : MonoBehaviour {
         if (livesRemaining == 0) {
             ProcessGameOver();
         } else {
-            foreach (Agent a in agents) {
-                a.Reset();
-            }
+            ResetAgents();
         }
     }
 
@@ -54,13 +69,18 @@ public class GameManager : MonoBehaviour {
         if (!PlayerPrefs.HasKey("High_Score") || score > PlayerPrefs.GetInt("High_Score")) {
             PlayerPrefs.SetInt("High_Score", score);
             highScoreText.text = string.Format("{0}", score.ToString().PadLeft(5, '0'));
-        } else {
-            Debug.Log(PlayerPrefs.GetInt("High_Score"));
         }
+        startButton.GetComponentInChildren<Text>().text = "Restart";
+        startButton.SetActive(true);
     }
 
     public void incScore() {
         scoreText.text = string.Format("{0}", (++score).ToString().PadLeft(5, '0'));
+    }
+
+    //use this to put all pellets back after restart
+    void ResetPellets() {
+
     }
 
 }

@@ -20,6 +20,7 @@ public class Agent : MonoBehaviour {
         rigidBody = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
         startScale = transform.localScale;
+        enabled = false;
     }
 
     protected void SetDirection(int newDir = -1) {
@@ -42,7 +43,7 @@ public class Agent : MonoBehaviour {
         enabled = false;
     }
 
-    public virtual void Reset() {
+    public virtual void Restart() {
         enabled = true;
         transform.position = startPosition;
         transform.localScale = startScale;

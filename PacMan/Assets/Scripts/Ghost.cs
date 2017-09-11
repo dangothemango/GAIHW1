@@ -13,13 +13,12 @@ public class Ghost : Agent {
 
     protected override void protStart() {
         base.protStart();
-        SetDirection();
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.color = color;
     }
 
-    public override void Reset() {
-        base.Reset();
+    public override void Restart() {
+        base.Restart();
         SetDirection();
     }
 	
