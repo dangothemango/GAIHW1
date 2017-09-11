@@ -42,11 +42,11 @@ public class LevelLoader : MonoBehaviour {
             
         }
 
-        int x = 0, y = 0;
+        int x = 0, y = 0, i = 0, u = 0;
 
-        for (int i = 0; i < 36; ++i;) 
+        for (i = 0; i < 36; ++i) 
         {
-            for (int u = 0; u < 28; ++u;)
+            for (u = 0; u < 28; ++u)
             {
                 if (grid[i][u] == "1")
                 {
