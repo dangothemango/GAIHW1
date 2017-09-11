@@ -9,7 +9,7 @@ public class LevelLoader : MonoBehaviour {
     public GameObject Block;
     public GameObject Pellet;
     public string fileName;
-    string[][] grid;
+    char[][] grid = new char[36][];
 
     // Use this for initialization
     void Start ()
@@ -17,18 +17,24 @@ public class LevelLoader : MonoBehaviour {
         try
         {
             string line;
+            int i = 0;
             StreamReader reader = new StreamReader(fileName, Encoding.Default);
             using (reader)
             {
                 do
                 {
-                    int i = 0;
+                    
                     line = reader.ReadLine();
 
                     if (line != null)
                     {
-                        string[] entries = line.Split();
+                        char[] entries = line.ToCharArray();
                         grid[i] = entries;
+                        string str = "";
+                        foreach (char c in entries) {
+                            str += c;
+                        }
+                        Debug.Log(str+grid[i].Length.ToString());
                         ++i;
                     }
                 }
@@ -37,26 +43,35 @@ public class LevelLoader : MonoBehaviour {
                 reader.Close();
             }
         }
-        catch
+        catch (System.Exception e)
         {
-            
+            Debug.LogError(e.Message);
+            Debug.LogWarning(e.StackTrace);
         }
 
-        int x = 0, y = 0, i = 0, u = 0;
+        float x = 0, y = 38.5f;
+        Debug.Log(grid.Length);
+        Debug.Log(grid[1].Length);
 
-        for (i = 0; i < 36; ++i) 
+        for (int i = 0; i < 36; ++i) 
         {
-            for (u = 0; u < 28; ++u)
+            for (int u = 0; u < 28; ++u)
             {
-                if (grid[i][u] == "1")
+                Debug.Log(i.ToString() + " " + u.ToString());
+                if (grid[i][u] == '1')
                 {
+                    Debug.Log(i.ToString() + " " + u.ToString());
                     Instantiate(Block, new Vector3(x, y, 0), Quaternion.identity);
                 }
-                else if (grid[i][u] == "0")
+                else if (grid[i][u] == '0')
                 {
+                    Debug.Log(i.ToString() + " " + u.ToString());
                     Instantiate(Pellet, new Vector3(x, y, 0), Quaternion.identity);
                 }
+                x += 2.6f;
             }
+            x = 0;
+            y -= 2.6f;
         }
     }
 	

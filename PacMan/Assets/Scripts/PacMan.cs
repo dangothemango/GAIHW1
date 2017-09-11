@@ -47,4 +47,10 @@ public class PacMan : Agent {
             GameManager.INSTANCE.incScore();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.name.Contains("Wall")) {
+            rigidBody.velocity = Directions[dir] * speed;
+        }
+    }
 }

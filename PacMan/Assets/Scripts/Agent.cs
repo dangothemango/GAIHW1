@@ -34,8 +34,14 @@ public class Agent : MonoBehaviour {
         else {
             dir = newDir;
         }
-        rigidBody.velocity = Directions[dir] * speed;
-        transform.rotation = Quaternion.Euler(0, 0, 90 * dir);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(Directions[dir].x, Directions[dir].y) * 2f, Directions[dir], 1.0f);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(Directions[dir].x,Directions[dir].y) * 3f);
+
+        if (hit.collider == null || !hit.collider.gameObject.name.Contains("Wall")) {
+            rigidBody.velocity = Directions[dir] * speed;
+            transform.rotation = Quaternion.Euler(0, 0, 90 * dir);
+        }
     }
 
     public void Stop() {
