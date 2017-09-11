@@ -8,6 +8,8 @@ public class Agent : MonoBehaviour {
     protected static Vector2[] Directions = { Vector2.down, Vector2.right, Vector2.up, Vector2.left };
     protected Rigidbody2D rigidBody;
     protected int dir = 0;
+    protected Vector3 startPosition;
+    protected Vector3 startScale;
 
     // Use this for initialization
     void Start () {
@@ -16,6 +18,8 @@ public class Agent : MonoBehaviour {
 
     protected virtual void protStart() {
         rigidBody = GetComponent<Rigidbody2D>();
+        startPosition = transform.position;
+        startScale = transform.localScale;
     }
 
     protected void SetDirection(int newDir = -1) {
@@ -36,5 +40,11 @@ public class Agent : MonoBehaviour {
     public void Stop() {
         rigidBody.velocity = Vector2.zero;
         enabled = false;
+    }
+
+    public virtual void Reset() {
+        enabled = true;
+        transform.position = startPosition;
+        transform.localScale = startScale;
     }
 }

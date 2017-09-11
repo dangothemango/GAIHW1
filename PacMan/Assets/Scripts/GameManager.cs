@@ -6,14 +6,18 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     public static GameManager INSTANCE;
-    public GameObject[] ghosts = { };
+    //PacMan will always be agents[0]
+    public Agent[] agents = { };
+    public Image[] LivesUI;
     public Text scoreText;
     public Text highScoreText;
+    int livesRemaining;
     int score = 0;
 
 
 	// Use this for initialization
 	void Start () {
+        livesRemaining = LivesUI.Length;
         if (PlayerPrefs.HasKey("High_Score")) {
             highScoreText.text = string.Format("{0}", PlayerPrefs.GetInt("High_Score").ToString().PadLeft(5,'0'));
         }
@@ -29,9 +33,20 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-    public void StopGhosts() {
-        foreach (GameObject g in ghosts) {
-            g.GetComponent<Ghost>().Stop();
+    public void StopAgents() {
+        foreach (Agent a in agents) {
+            a.Stop();
+        }
+    }
+
+    public void OnDeath() {
+        LivesUI[--livesRemaining].gameObject.SetActive(false);
+        if (livesRemaining == 0) {
+            ProcessGameOver();
+        } else {
+            foreach (Agent a in agents) {
+                a.Reset();
+            }
         }
     }
 

@@ -17,6 +17,11 @@ public class Ghost : Agent {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.color = color;
     }
+
+    public override void Reset() {
+        base.Reset();
+        SetDirection();
+    }
 	
 	// Update is called once per frame
 	void Update () {

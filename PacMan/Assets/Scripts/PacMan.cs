@@ -26,7 +26,7 @@ public class PacMan : Agent {
 
     public void Die() {
         Stop();
-        GameManager.INSTANCE.StopGhosts();
+        GameManager.INSTANCE.StopAgents();
         StartCoroutine(FadeOut());
     }
 
@@ -38,8 +38,7 @@ public class PacMan : Agent {
             transform.localScale = origScale * (1f - t / deathTime);
             yield return null;
         }
-        GameManager.INSTANCE.ProcessGameOver();
-        Destroy(this.gameObject);
+        GameManager.INSTANCE.OnDeath();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
