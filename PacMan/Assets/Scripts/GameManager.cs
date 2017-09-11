@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         if (PlayerPrefs.HasKey("High_Score")) {
-            highScoreText.text = string.Format("High Score: {0}  ", PlayerPrefs.GetInt("High_Score"));
+            highScoreText.text = string.Format("{0}", PlayerPrefs.GetInt("High_Score").ToString().PadLeft(5,'0'));
         }
 		if (INSTANCE != null) {
             this.enabled = false;
@@ -38,14 +38,14 @@ public class GameManager : MonoBehaviour {
     public void ProcessGameOver() {
         if (!PlayerPrefs.HasKey("High_Score") || score > PlayerPrefs.GetInt("High_Score")) {
             PlayerPrefs.SetInt("High_Score", score);
-            highScoreText.text = string.Format("High Score: {0}  ", score);
+            highScoreText.text = string.Format("{0}", score.ToString().PadLeft(5, '0'));
         } else {
             Debug.Log(PlayerPrefs.GetInt("High_Score"));
         }
     }
 
     public void incScore() {
-        scoreText.text = string.Format("  Score: {0}", ++score);
+        scoreText.text = string.Format("{0}", (++score).ToString().PadLeft(5, '0'));
     }
 
 }
