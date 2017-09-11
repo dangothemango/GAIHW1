@@ -41,4 +41,11 @@ public class PacMan : Agent {
         GameManager.INSTANCE.ProcessGameOver();
         Destroy(this.gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.GetComponent<Pellet>() != null) {
+            Destroy(collision.gameObject);
+            GameManager.INSTANCE.incScore();
+        }
+    }
 }
